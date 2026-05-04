@@ -1,17 +1,8 @@
 "use client";
 
-import {
-  ArrowRight,
-  Check,
-  ChevronRight,
-  Menu,
-  ShieldCheck,
-  Sparkles,
-  Users,
-  X
-} from "lucide-react";
+import { ArrowRight, Check, Menu, Moon, ShieldCheck, Smile, Sun, Users } from "lucide-react";
 import Image from "next/image";
-import { FormEvent, useEffect, useState } from "react";
+import { useState } from "react";
 
 const asset = (path: string) => `https://snerqq.ch${path}`;
 const optimized = (path: string, width = 3840) =>
@@ -21,447 +12,266 @@ const images = {
   logo: asset("/icons/logo.svg"),
   hero: optimized("/_next/static/media/playground-baner.02mnc1-l873zb.webp"),
   phone: optimized("/_next/static/media/phone-in-hand.1685vn8xe_lrz.webp", 1200),
-  dings: optimized("/_next/static/media/evolution-2.03.mdckmq8ke9.webp"),
-  dingsAlt: optimized("/_next/static/media/evolution-4.0f-l5zp8tqs29.webp"),
-  harmless: optimized("/_next/static/media/harmless.03hmh9-b.wzqx.webp"),
-  freeNotFree: optimized("/_next/static/media/free-not-free.0snq478o81z4z.webp"),
-  policy: optimized("/_next/static/media/policy-scheme.15ln7006eao9r.webp"),
-  happiness: optimized("/_next/static/media/happines.0.06typ6lswuj.webp")
+  sticker: asset("/icons/stickers/5-year-sticker.webp"),
+  dingsCircle: optimized("/_next/static/media/circule.0471e2k~rj-6_.webp"),
+  dingsArrows: optimized("/_next/static/media/arrows.05g4.vqxjjw4v.webp"),
+  dingsCenter: optimized("/_next/static/media/happines.0.06typ6lswuj.webp"),
+  evolution0: optimized("/_next/static/media/evolution-0.0th023~1edq9r.webp"),
+  evolution1: optimized("/_next/static/media/evolution-1.0aq_exnaj8mmb.webp"),
+  evolution2: optimized("/_next/static/media/evolution-2.03.mdckmq8ke9.webp"),
+  evolution3: optimized("/_next/static/media/evolution-3.00a9blqwm-3lt.webp"),
+  evolution4: optimized("/_next/static/media/evolution-4.0f-l5zp8tqs29.webp")
 };
 
-const navItems = [
-  { label: "The problem", href: "#problem" },
-  { label: "Features", href: "#features" },
-  { label: "Safety", href: "#safety" },
-  { label: "Launch", href: "#launch" }
-];
+const navItems = ["Home", "How it works", "Child safety", "snërqq Test", "Roadmap"];
 
 const trustBullets = [
-  "Built for kids, not for big tech",
-  "Parent-approved friend groups",
-  "No endless feed, no ads, no influencers"
+  "Built for kids. Not for big tech.",
+  "Parent-approved from the start.",
+  "Ad-free and designed around real friend groups."
 ];
 
-const features = [
+const childFriendlyCards = [
   {
-    title: "The Dings",
-    eyebrow: "Shared companion",
-    text: "Every friend group gets a living companion that grows through shared play, creativity and care.",
-    image: images.dings,
-    color: "bg-mint",
-    span: "xl:col-span-2"
+    label: "For kids",
+    title: "A place that feels like theirs",
+    icon: Smile,
+    accent: "bg-blush text-berry",
+    items: [
+      "They do not just chat. They build their own group companion together.",
+      "They do not scroll a random feed. They are part of a story that grows with them.",
+      "They explore a digital playground that responds through characters and moments.",
+      "They play games without ads interrupting them."
+    ]
   },
   {
-    title: "Yard",
-    eyebrow: "Digital playground",
-    text: "Small games and shared moments give children a playful reason to meet without endless competition loops.",
-    image: images.happiness,
-    color: "bg-butter",
-    span: "xl:col-span-2"
-  },
-  {
-    title: "Chat",
-    eyebrow: "Real friends only",
-    text: "Group and one-to-one chats stay rooted in real friendships, not public performance or viral visibility.",
-    image: images.phone,
-    color: "bg-skywash",
-    span: "xl:col-span-1"
-  },
-  {
-    title: "MySpot",
-    eyebrow: "Personal space",
-    text: "A private place for memories, diary moments and friendship-book energy inside a closed group.",
-    image: images.dingsAlt,
-    color: "bg-blush",
-    span: "xl:col-span-1"
-  },
-  {
-    title: "Buzz",
-    eyebrow: "Group-shaped stream",
-    text: "A stream for friend-circle moments and Yard Clips, deliberately designed without an endless algorithmic feed.",
-    image: images.policy,
-    color: "bg-paper",
-    span: "xl:col-span-1"
-  }
-];
-
-const safetyItems = [
-  {
-    icon: ShieldCheck,
-    title: "Safety by design",
-    text: "Closed groups, parent approval and visible boundaries are part of the product, not an afterthought."
-  },
-  {
+    label: "For parents",
+    title: "A system you can actually say yes to",
     icon: Users,
-    title: "Friendship over reach",
-    text: "Children interact with people they know. There is no public audience pushing them to perform."
-  },
-  {
-    icon: Sparkles,
-    title: "Natural stopping points",
-    text: "The experience is built around shared activities instead of infinite scroll and constant alerts."
+    accent: "bg-mint text-lagoon",
+    items: [
+      "Built for kids, not for big tech.",
+      "Designed around real friend groups, not open networks.",
+      "No ads. No endless feeds. No pressure to stay.",
+      "Parent-approved from the start."
+    ]
   }
 ];
 
-type FormErrors = {
-  email?: string;
-  policy?: string;
-};
+const dingsMoments = [
+  {
+    title: "It belongs to the group",
+    text: "Every child helps shape it.",
+    image: images.evolution0,
+    desktopPosition: "left-[25%] top-[28%]"
+  },
+  {
+    title: "Every Ding is unique",
+    text: "Each group builds its own version.",
+    image: images.evolution1,
+    desktopPosition: "left-[71%] top-[24%]"
+  },
+  {
+    title: "You can play with it",
+    text: "It is part of games and shared fun.",
+    image: images.evolution2,
+    desktopPosition: "left-[77%] top-[62%]"
+  },
+  {
+    title: "It grows over time",
+    text: "The Dings evolves through five stages.",
+    image: images.evolution3,
+    desktopPosition: "left-[50%] top-[85%]"
+  },
+  {
+    title: "It is their constant companion",
+    text: "It reacts to the group and the child.",
+    image: images.evolution4,
+    desktopPosition: "left-[23%] top-[62%]"
+  }
+];
+
+type Theme = "light" | "dark";
 
 export default function Home() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window === "undefined") {
+      return "light";
+    }
 
-  useEffect(() => {
-    document.body.style.overflow = modalOpen || menuOpen ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [modalOpen, menuOpen]);
+    const storedTheme = window.localStorage.getItem("snerqq-theme");
 
-  const openModal = () => {
-    setMenuOpen(false);
-    setModalOpen(true);
+    if (storedTheme === "light" || storedTheme === "dark") {
+      return storedTheme;
+    }
+
+    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      return "dark";
+    }
+
+    return "light";
+  });
+
+  const toggleTheme = () => {
+    setTheme((currentTheme) => {
+      const nextTheme = currentTheme === "dark" ? "light" : "dark";
+      window.localStorage.setItem("snerqq-theme", nextTheme);
+      return nextTheme;
+    });
   };
 
   return (
-    <main className="min-h-screen overflow-x-hidden text-ink">
-      <Header
-        menuOpen={menuOpen}
-        onMenuToggle={() => setMenuOpen((open) => !open)}
-        onOpenModal={openModal}
-      />
-      <Hero onOpenModal={openModal} />
-      <ProblemSection />
-      <FeatureSection />
-      <SafetySection />
-      <LaunchSection onOpenModal={openModal} />
+    <main className={`${theme === "dark" ? "dark bg-ink text-white" : "bg-paper text-ink"} min-h-screen overflow-x-hidden transition-colors duration-300`}>
+      <SiteHeader theme={theme} onToggleTheme={toggleTheme} />
+      <HeroSection />
+      <ChildFriendlySection />
+      <DingsEvolutionSection />
       <SiteFooter />
-      <LaunchModal open={modalOpen} onClose={() => setModalOpen(false)} />
     </main>
   );
 }
 
-function Header({
-  menuOpen,
-  onMenuToggle,
-  onOpenModal
-}: {
-  menuOpen: boolean;
-  onMenuToggle: () => void;
-  onOpenModal: () => void;
-}) {
+function HeroSection() {
   return (
-    <header className="sticky top-0 z-40 border-b border-ink/10 bg-paper/92 backdrop-blur-xl">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:h-20 lg:px-8">
-        <a className="focus-ring rounded-xl" href="#" aria-label="snërqq home">
-          <Image
-            src={images.logo}
-            alt="snërqq"
-            width={115}
-            height={40}
-            className="h-8 w-auto lg:h-10"
-            style={{ width: "auto" }}
-            unoptimized
-          />
-        </a>
-
-        <nav className="hidden items-center gap-2 lg:flex" aria-label="Main navigation">
-          {navItems.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="focus-ring rounded-full px-4 py-3 text-sm font-semibold text-ink/72 transition hover:bg-white hover:text-ink"
-            >
-              {item.label}
-            </a>
-          ))}
-        </nav>
-
-        <div className="flex items-center gap-2">
-          <button
-            className="focus-ring hidden min-h-12 items-center gap-2 rounded-full bg-lime px-5 text-sm font-bold text-berry shadow-button transition hover:-translate-y-0.5 hover:shadow-soft lg:flex"
-            type="button"
-            onClick={onOpenModal}
-          >
-            Join the launch list
-            <ArrowRight aria-hidden="true" size={18} />
-          </button>
-          <button
-            className="focus-ring flex h-11 w-11 items-center justify-center rounded-full bg-white text-ink shadow-sm lg:hidden"
-            type="button"
-            aria-label={menuOpen ? "Close menu" : "Open menu"}
-            aria-expanded={menuOpen}
-            onClick={onMenuToggle}
-          >
-            {menuOpen ? <X aria-hidden="true" size={22} /> : <Menu aria-hidden="true" size={22} />}
-          </button>
-        </div>
-      </div>
-
-      {menuOpen ? (
-        <div className="border-t border-ink/10 bg-paper px-4 pb-6 pt-2 lg:hidden">
-          <nav className="flex flex-col" aria-label="Mobile navigation">
-            {navItems.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                className="focus-ring flex min-h-14 items-center justify-between rounded-xl px-3 text-lg font-semibold"
-              >
-                {item.label}
-                <ChevronRight aria-hidden="true" size={18} />
-              </a>
-            ))}
-          </nav>
-          <button
-            className="focus-ring mt-4 flex min-h-14 w-full items-center justify-center gap-2 rounded-2xl bg-lime px-5 text-lg font-bold text-berry shadow-button"
-            type="button"
-            onClick={onOpenModal}
-          >
-            Join the launch list
-            <ArrowRight aria-hidden="true" size={20} />
-          </button>
-        </div>
-      ) : null}
-    </header>
-  );
-}
-
-function Hero({ onOpenModal }: { onOpenModal: () => void }) {
-  return (
-    <section className="relative isolate min-h-[calc(100dvh-4rem)] overflow-hidden lg:min-h-[820px]">
+    <section className="relative isolate h-[720px] w-full overflow-hidden md:h-[640px] xl:h-[870px]">
       <Image
         src={images.hero}
         alt="Digital playground background"
-        className="absolute inset-0 h-full w-full object-cover"
         fill
         priority
+        sizes="(max-width: 768px) 100vw, (max-width: 1280px) 100vw, 1440px"
+        className="object-cover object-center"
         unoptimized
       />
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(12,18,28,0.74),rgba(12,18,28,0.48)_46%,rgba(12,18,28,0.1))]" />
-      <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-paper to-transparent" />
 
-      <div className="relative mx-auto flex min-h-[calc(100dvh-4rem)] max-w-7xl items-center px-4 py-16 sm:px-6 lg:min-h-[820px] lg:px-8">
-        <div className="max-w-3xl pt-10 text-white">
-          <p className="mb-5 inline-flex rounded-full border border-white/30 bg-white/16 px-4 py-2 text-sm font-bold uppercase backdrop-blur-md">
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(12,18,28,0.48)_0%,rgba(12,18,28,0.56)_42%,rgba(12,18,28,0.72)_100%)] md:bg-[linear-gradient(90deg,rgba(12,18,28,0.78)_0%,rgba(12,18,28,0.56)_45%,rgba(12,18,28,0.16)_78%)]" />
+      <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-ink/50 to-transparent" />
+
+      <Image
+        src={images.sticker}
+        alt="Limited Pre-Launch offer: 5 years for the price of 1"
+        width={170}
+        height={166}
+        className="absolute right-3 top-[104px] z-20 h-[116px] w-[120px] rotate-[7deg] drop-shadow-[0_18px_34px_rgba(0,0,0,0.34)] md:right-[28%] md:top-[188px] md:h-[190px] md:w-[196px] xl:hidden"
+        unoptimized
+      />
+
+      <div className="relative z-10 flex h-full max-w-[1440px] items-start px-4 pt-12 md:px-10 md:pt-14 xl:mx-auto xl:px-[100px] xl:pt-[120px]">
+        <div className="flex max-w-[794px] flex-col gap-7 text-white md:max-w-[620px] xl:max-w-[794px]">
+          <div className="inline-flex w-fit items-center gap-2 rounded-full border border-white/28 bg-white/14 px-4 py-2 text-sm font-bold uppercase leading-none backdrop-blur-md">
+            <ShieldCheck aria-hidden="true" size={16} />
             Pre-launch for safer digital childhoods
-          </p>
-          <h1 className="max-w-3xl text-4xl font-black leading-[1.04] tracking-normal sm:text-6xl lg:text-7xl">
-            A digital playground where friends chat, play and create together.
-          </h1>
-          <p className="mt-6 max-w-2xl text-lg font-semibold leading-8 text-white/90 sm:text-2xl sm:leading-9">
-            Every friend group gets its own Dings, a shared companion that grows with them in a world made for children.
-          </p>
-
-          <div className="mt-7 grid max-w-2xl gap-3">
-            {trustBullets.map((item) => (
-              <div key={item} className="flex items-start gap-3 text-base font-semibold sm:text-lg">
-                <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-lime text-berry">
-                  <Check aria-hidden="true" size={17} strokeWidth={3} />
-                </span>
-                <span>{item}</span>
-              </div>
-            ))}
           </div>
 
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+          <div className="flex flex-col gap-4 md:gap-5">
+            <h1 className="max-w-[700px] text-[34px] font-black leading-[112%] tracking-normal md:text-[46px] md:leading-[116%] xl:text-[62px] xl:leading-[106%]">
+              A safer digital playground for real friends.
+            </h1>
+
+            <p className="max-w-[560px] text-base font-semibold leading-[150%] text-white/86 md:text-[22px] md:leading-[135%] xl:max-w-[600px]">
+              Kids chat, play and create in closed friend groups — with their own Dings growing alongside them.
+            </p>
+
+            <div className="grid gap-2.5 md:gap-3">
+              {trustBullets.map((item) => (
+                <div key={item} className="flex items-start gap-3">
+                  <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-lime text-berry shadow-[0_8px_18px_rgba(173,252,3,0.24)]">
+                    <Check aria-hidden="true" size={17} strokeWidth={3} />
+                  </span>
+                  <span className="text-base font-semibold leading-[150%] text-white md:text-[18px]">
+                    {item}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-4 pt-1 md:flex-row md:items-center">
             <button
-              className="focus-ring flex min-h-14 items-center justify-center gap-2 rounded-2xl bg-lime px-7 text-lg font-black text-berry shadow-button transition hover:-translate-y-0.5"
               type="button"
-              onClick={onOpenModal}
+              className="focus-ring flex h-14 w-full shrink-0 items-center justify-center gap-2 rounded-2xl bg-lime px-6 text-base font-black text-berry shadow-button transition duration-200 hover:-translate-y-0.5 hover:shadow-soft md:w-[230px] md:text-[18px]"
             >
               Join the launch list
               <ArrowRight aria-hidden="true" size={20} />
             </button>
-            <a
-              className="focus-ring flex min-h-14 items-center justify-center rounded-2xl border border-white/45 bg-white/12 px-7 text-lg font-bold text-white backdrop-blur-md transition hover:bg-white/20"
-              href="#features"
-            >
-              Explore snërqq
-            </a>
+
+            <p className="max-w-[310px] text-sm font-semibold leading-6 text-white/76">
+              No endless feed. No ads. No public visibility.
+            </p>
           </div>
         </div>
+
+        <Image
+          src={images.sticker}
+          alt=""
+          aria-hidden="true"
+          width={225}
+          height={219}
+          className="ml-4 mt-[92px] hidden h-[310px] w-[318px] shrink-0 rotate-[6deg] drop-shadow-[0_24px_52px_rgba(0,0,0,0.38)] xl:block"
+          unoptimized
+        />
       </div>
+
+      <Image
+        src={images.phone}
+        alt="snërqq app on a smartphone"
+        width={545}
+        height={817}
+        priority
+        className="absolute bottom-[-36px] right-[-38px] z-10 hidden h-[534px] w-[356px] object-contain drop-shadow-[0_28px_70px_rgba(0,0,0,0.42)] md:block xl:bottom-0 xl:right-0 xl:h-[817px] xl:w-[545px]"
+        unoptimized
+      />
     </section>
   );
 }
 
-function ProblemSection() {
+function ChildFriendlySection() {
   return (
-    <section id="problem" className="texture relative px-4 py-16 sm:px-6 lg:px-8 lg:py-28">
-      <div className="relative mx-auto max-w-7xl">
+    <section id="child-friendly" className="bg-paper px-4 py-16 transition-colors duration-300 md:px-10 md:py-20 xl:px-[100px] dark:bg-[#111C28]">
+      <div className="mx-auto max-w-[1440px]">
         <div className="mx-auto max-w-4xl text-center">
-          <p className="text-sm font-black uppercase tracking-normal text-berry">The problem</p>
-          <h2 className="mt-3 text-3xl font-black leading-tight text-ink sm:text-5xl">
-            The daily stress around phones is not a coincidence
+          <p className="text-sm font-black uppercase text-berry">For kids and parents</p>
+          <h2 className="mt-3 text-[30px] font-black leading-[116%] tracking-normal text-ink md:text-[52px] dark:text-white">
+            <span>Why kids love it.</span>{" "}
+            <span className="text-lagoon dark:text-[#7FEAF3]">Why parents say yes.</span>
           </h2>
-          <p className="mx-auto mt-5 max-w-3xl text-lg leading-8 text-ink/72 sm:text-xl">
-            Free platforms make money by keeping children online for as long as possible. Children grow up inside systems optimized for attention, visibility and constant activity.
-          </p>
         </div>
 
-        <div className="mt-14 grid items-center gap-8 lg:grid-cols-2 lg:gap-14">
-          <ContentPanel
-            eyebrow="Hidden pressure"
-            title="What looks harmless can become a real problem"
-            highlight="This is bigger than ordinary screen time."
-            paragraphs={[
-              "In many families, the same conflicts keep coming back. Phones are hard to put away. Group chats escalate. After mainstream platforms, children can be left feeling agitated, withdrawn or overwhelmed.",
-              "Many platforms are intentionally built to keep children checking back, reacting quickly and staying socially alert. Over time, that can fuel pressure, overstimulation, poor sleep and emotional instability."
-            ]}
-          />
-          <ImageCard
-            src={images.harmless}
-            alt="Child reacting to a message on their phone"
-            label="Attention loops feel personal to families"
-          />
-        </div>
+        <div className="mt-10 grid gap-5 xl:grid-cols-2 xl:gap-6">
+          {childFriendlyCards.map((card) => {
+            const Icon = card.icon;
 
-        <div className="mt-10 grid items-center gap-8 lg:mt-16 lg:grid-cols-2 lg:gap-14">
-          <div className="lg:order-2">
-            <ContentPanel
-              eyebrow="The real cost"
-              title="Free is not really free"
-              highlight="When a platform is free, attention becomes the business model."
-              paragraphs={[
-                "The longer children stay online, the more valuable their time becomes for the platform.",
-                "That is why many systems rely on endless scrolling, constant stimulation, public visibility and social mechanics that keep pulling children back in."
-              ]}
-            />
-          </div>
-          <div className="lg:order-1">
-            <ImageCard
-              src={images.freeNotFree}
-              alt="Two children, one distracted by phone"
-              label="A calmer digital everyday life is possible"
-            />
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function ContentPanel({
-  eyebrow,
-  title,
-  highlight,
-  paragraphs
-}: {
-  eyebrow: string;
-  title: string;
-  highlight: string;
-  paragraphs: string[];
-}) {
-  return (
-    <article className="rounded-[2rem] border border-ink/10 bg-white/78 p-6 shadow-soft backdrop-blur sm:p-8 lg:p-10">
-      <p className="text-sm font-black uppercase text-lagoon">{eyebrow}</p>
-      <h3 className="mt-3 text-2xl font-black leading-tight text-ink sm:text-4xl">{title}</h3>
-      <div className="mt-6 space-y-5 text-base leading-8 text-ink/74 sm:text-lg">
-        <p>{paragraphs[0]}</p>
-        <p className="rounded-2xl border-l-4 border-berry bg-blush px-5 py-4 font-bold text-ink">
-          {highlight}
-        </p>
-        <p>{paragraphs[1]}</p>
-      </div>
-    </article>
-  );
-}
-
-function ImageCard({ src, alt, label }: { src: string; alt: string; label: string }) {
-  return (
-    <figure className="overflow-hidden rounded-[2rem] bg-white p-3 shadow-soft">
-      <div className="relative aspect-[607/354] overflow-hidden rounded-[1.4rem]">
-        <Image src={src} alt={alt} className="object-cover" fill sizes="(max-width: 1024px) 100vw, 50vw" unoptimized />
-      </div>
-      <figcaption className="flex items-center gap-2 px-2 pb-1 pt-4 text-sm font-bold text-ink/70">
-        <span className="h-2.5 w-2.5 rounded-full bg-lime" />
-        {label}
-      </figcaption>
-    </figure>
-  );
-}
-
-function FeatureSection() {
-  return (
-    <section id="features" className="px-4 py-16 sm:px-6 lg:px-8 lg:py-28">
-      <div className="mx-auto max-w-7xl">
-        <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
-          <div>
-            <p className="text-sm font-black uppercase text-berry">The product</p>
-            <h2 className="mt-3 text-3xl font-black leading-tight sm:text-5xl">
-              Built like a playground, governed like a safe space.
-            </h2>
-          </div>
-          <p className="max-w-2xl text-lg leading-8 text-ink/72 sm:text-xl">
-            snërqq keeps the magic children want while changing the mechanics parents worry about: no public follower chase, no ad-funded attention loop, no endless scroll.
-          </p>
-        </div>
-
-        <div className="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-5">
-          {features.map((feature) => (
-            <article
-              key={feature.title}
-              className={`${feature.color} ${feature.span} group flex min-h-[440px] flex-col overflow-hidden rounded-[2rem] border border-ink/10 p-5 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-soft`}
-            >
-              <div className="relative aspect-[4/3] overflow-hidden rounded-[1.5rem] bg-white/70">
-                <Image
-                  src={feature.image}
-                  alt=""
-                  className="object-cover transition duration-500 group-hover:scale-105"
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 20vw"
-                  unoptimized
-                />
-              </div>
-              <div className="mt-5 flex flex-1 flex-col">
-                <p className="text-xs font-black uppercase text-berry">{feature.eyebrow}</p>
-                <h3 className="mt-2 text-2xl font-black">{feature.title}</h3>
-                <p className="mt-3 text-base leading-7 text-ink/72">{feature.text}</p>
-              </div>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function SafetySection() {
-  return (
-    <section id="safety" className="bg-ink px-4 py-16 text-white sm:px-6 lg:px-8 lg:py-28">
-      <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-        <div>
-          <p className="text-sm font-black uppercase text-lime">Safety by design</p>
-          <h2 className="mt-3 text-3xl font-black leading-tight sm:text-5xl">
-            A friend-first system that refuses the usual attention economy.
-          </h2>
-          <p className="mt-5 text-lg leading-8 text-white/72">
-            snërqq is member-funded and built for children to connect with real friends. The rules, the product loops and the visual world all point toward healthier use.
-          </p>
-
-          <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
-            {["No ads", "No public profiles", "No endless feed", "Parent approval"].map((item) => (
-              <div key={item} className="rounded-2xl border border-white/14 bg-white/8 p-4 text-sm font-black">
-                {item}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="grid gap-4">
-          {safetyItems.map((item) => {
-            const Icon = item.icon;
             return (
-              <article key={item.title} className="rounded-[2rem] border border-white/12 bg-white/8 p-6 backdrop-blur">
-                <div className="flex gap-4">
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-lime text-berry">
-                    <Icon aria-hidden="true" size={24} strokeWidth={2.5} />
+              <article
+                key={card.label}
+                className="relative overflow-hidden rounded-[2rem] border border-ink/10 bg-white p-5 shadow-[0_18px_54px_rgba(23,32,42,0.08)] transition-colors duration-300 md:p-7 dark:border-white/12 dark:bg-[#152331] dark:shadow-none"
+              >
+                <div className="absolute right-[-42px] top-[-42px] h-40 w-40 rounded-full bg-lime/20" />
+                <div className="relative">
+                  <div className="flex items-center justify-between gap-4">
+                    <div className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-black ${card.accent} dark:bg-white/10 dark:text-[#9FF4FA]`}>
+                      <Icon aria-hidden="true" size={17} />
+                      {card.label}
+                    </div>
+                    <div className="hidden h-12 w-12 items-center justify-center rounded-2xl bg-ink text-lime md:flex dark:bg-lime dark:text-berry">
+                      <Check aria-hidden="true" size={22} strokeWidth={3} />
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-xl font-black">{item.title}</h3>
-                    <p className="mt-2 leading-7 text-white/70">{item.text}</p>
-                  </div>
+
+                  <h3 className="mt-5 max-w-[620px] text-[26px] font-black leading-[120%] text-lagoon md:text-[34px] dark:text-[#7FEAF3]">
+                    {card.title}
+                  </h3>
+
+                  <ul className="mt-6 grid gap-3">
+                    {card.items.map((item) => (
+                      <li key={item} className="flex gap-3 text-base font-semibold leading-[155%] text-ink/78 md:text-xl md:leading-[145%] dark:text-[#EAF7FA]">
+                        <span className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-lime text-berry">
+                          <Check aria-hidden="true" size={15} strokeWidth={3} />
+                        </span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </article>
             );
@@ -472,195 +282,206 @@ function SafetySection() {
   );
 }
 
-function LaunchSection({ onOpenModal }: { onOpenModal: () => void }) {
+function DingsEvolutionSection() {
   return (
-    <section id="launch" className="px-4 py-16 sm:px-6 lg:px-8 lg:py-28">
-      <div className="mx-auto grid max-w-7xl overflow-hidden rounded-[2.2rem] bg-berry shadow-soft lg:grid-cols-[1fr_0.8fr]">
-        <div className="p-6 text-white sm:p-10 lg:p-14">
-          <p className="text-sm font-black uppercase text-lime">Pre-launch offer</p>
-          <h2 className="mt-3 max-w-3xl text-3xl font-black leading-tight sm:text-5xl">
-            Join the list for a calmer first step into digital friendship.
+    <section
+      id="dings-evolution"
+      className="relative overflow-hidden bg-skywash px-4 py-16 transition-colors duration-300 md:px-10 md:py-20 xl:px-[100px] dark:bg-[#0C1723]"
+    >
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_16%_12%,rgba(173,252,3,0.26),transparent_24rem),radial-gradient(circle_at_84%_8%,rgba(253,2,157,0.12),transparent_22rem)]" />
+      <div className="relative mx-auto max-w-[1440px]">
+        <div className="mx-auto max-w-4xl text-center">
+          <p className="text-sm font-black uppercase text-berry dark:text-[#FF8FD5]">Shared group companion</p>
+          <h2 className="mt-3 text-[34px] font-black leading-[112%] text-ink md:text-[56px] dark:text-white">
+            The Dings
           </h2>
-          <p className="mt-5 max-w-2xl text-lg leading-8 text-white/82">
-            Get launch updates, early access information and the limited pre-launch offer: five years for the price of one year.
+          <p className="mx-auto mt-4 max-w-[760px] text-lg font-semibold leading-[155%] text-ink/70 md:text-xl dark:text-[#D7E8EE]">
+            A living group companion that children build together, grow over time and take through their shared world.
           </p>
-          <button
-            className="focus-ring mt-8 flex min-h-14 items-center justify-center gap-2 rounded-2xl bg-lime px-7 text-lg font-black text-berry shadow-button transition hover:-translate-y-0.5"
-            type="button"
-            onClick={onOpenModal}
-          >
-            Join the launch list
-            <ArrowRight aria-hidden="true" size={20} />
-          </button>
         </div>
-        <div className="relative min-h-[320px] bg-butter">
-          <Image
-            src={images.phone}
-            alt="Phone showing a child-friendly digital space"
-            className="object-cover"
-            fill
-            sizes="(max-width: 1024px) 100vw, 40vw"
-            unoptimized
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-ink/28 to-transparent" />
+
+        <div className="mt-10 hidden rounded-[2.25rem] border border-ink/10 bg-white/86 p-8 shadow-soft backdrop-blur transition-colors duration-300 xl:block dark:border-white/12 dark:bg-[#152331] dark:shadow-none">
+          <div className="relative mx-auto aspect-[1.24] max-w-[1040px]">
+            <Image
+              src={images.dingsCircle}
+              alt="The Dings evolution"
+              fill
+              sizes="1040px"
+              className="object-contain"
+              unoptimized
+            />
+            <Image
+              src={images.dingsArrows}
+              alt=""
+              aria-hidden="true"
+              width={284}
+              height={238}
+              className="pointer-events-none absolute left-1/2 top-[52%] h-[238px] w-[284px] -translate-x-1/2 -translate-y-1/2"
+              unoptimized
+            />
+            <Image
+              src={images.dingsCenter}
+              alt=""
+              aria-hidden="true"
+              width={150}
+              height={223}
+              className="pointer-events-none absolute left-1/2 top-[48%] h-[245px] w-auto -translate-x-1/2 -translate-y-1/2 drop-shadow-[0_18px_32px_rgba(23,32,42,0.18)]"
+              unoptimized
+            />
+
+            {dingsMoments.map((moment) => (
+              <div
+                key={moment.title}
+                className={`absolute max-w-[240px] -translate-x-1/2 rounded-2xl border border-ink/10 bg-paper/88 px-4 py-3 text-center shadow-[0_12px_32px_rgba(23,32,42,0.1)] backdrop-blur dark:border-white/12 dark:bg-[#0E1A26]/92 ${moment.desktopPosition}`}
+              >
+                <p className="text-lg font-black leading-[120%] text-lagoon dark:text-[#7FEAF3]">{moment.title}</p>
+                <p className="mt-1 text-sm font-semibold leading-[140%] text-ink/62 dark:text-[#D7E8EE]">{moment.text}</p>
+              </div>
+            ))}
+          </div>
+
+          <p className="mx-auto mt-6 max-w-[720px] text-center text-xl font-black leading-[140%] text-lagoon dark:text-[#9FF4FA]">
+            The Dings gives the group something that is truly theirs — something they build together and genuinely care about.
+          </p>
+        </div>
+
+        <div className="mt-10 grid gap-5 xl:hidden">
+          <article className="overflow-hidden rounded-[2rem] border border-ink/10 bg-white p-5 shadow-[0_18px_54px_rgba(23,32,42,0.08)] md:p-7 dark:border-white/12 dark:bg-[#152331] dark:shadow-none">
+            <div className="grid gap-6 md:grid-cols-[0.85fr_1.15fr] md:items-center">
+              <div className="flex flex-col items-center text-center">
+                <div className="relative h-[260px] w-full max-w-[220px]">
+                  <Image
+                    src={images.dingsCenter}
+                    alt="The Dings evolution"
+                    fill
+                    sizes="220px"
+                    className="object-contain drop-shadow-[0_18px_32px_rgba(23,32,42,0.18)]"
+                    unoptimized
+                  />
+                </div>
+                <p className="mt-4 text-base font-black leading-[150%] text-lagoon dark:text-[#9FF4FA]">
+                  The Dings gives the group something that is truly theirs.
+                </p>
+              </div>
+
+              <div className="grid gap-3">
+                {dingsMoments.map((moment, index) => (
+                  <div
+                    key={moment.title}
+                    className="grid grid-cols-[92px_1fr] items-center gap-4 rounded-2xl bg-skywash/70 p-3 dark:bg-white/10"
+                  >
+                    <div className="relative h-[72px] overflow-hidden rounded-xl bg-white">
+                      <Image
+                        src={moment.image}
+                        alt={moment.title}
+                        fill
+                        sizes="92px"
+                        className="object-contain"
+                        unoptimized
+                      />
+                    </div>
+                    <div>
+                      <p className="text-xs font-black uppercase text-berry dark:text-[#FF8FD5]">Stage {index + 1}</p>
+                      <h3 className="mt-1 text-base font-black leading-[120%] text-ink dark:text-[#F6FBFC]">{moment.title}</h3>
+                      <p className="mt-1 text-sm font-semibold leading-[140%] text-ink/62 dark:text-[#D7E8EE]">{moment.text}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </article>
         </div>
       </div>
     </section>
   );
 }
 
-function LaunchModal({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const [errors, setErrors] = useState<FormErrors>({});
-  const [success, setSuccess] = useState(false);
-
-  if (!open) {
-    return null;
-  }
-
-  const closeModal = () => {
-    setErrors({});
-    setSuccess(false);
-    onClose();
-  };
-
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const form = new FormData(event.currentTarget);
-    const email = String(form.get("email") ?? "").trim();
-    const policy = form.get("policy") === "on";
-    const nextErrors: FormErrors = {};
-
-    if (!email) {
-      nextErrors.email = "Email is required.";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      nextErrors.email = "Please enter a valid email address.";
-    }
-
-    if (!policy) {
-      nextErrors.policy = "Please agree to the Privacy Policy.";
-    }
-
-    setErrors(nextErrors);
-    if (Object.keys(nextErrors).length === 0) {
-      setSuccess(true);
-    }
-  };
-
+function SiteHeader({
+  theme,
+  onToggleTheme
+}: {
+  theme: Theme;
+  onToggleTheme: () => void;
+}) {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center px-4 py-6" role="dialog" aria-modal="true" aria-labelledby="launch-modal-title">
-      <button className="absolute inset-0 bg-ink/62 backdrop-blur-sm" type="button" aria-label="Close launch form" onClick={closeModal} />
-      <div className="relative max-h-[calc(100dvh-3rem)] w-full max-w-xl overflow-y-auto rounded-[2rem] bg-paper p-6 shadow-soft sm:p-8">
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <p className="text-sm font-black uppercase text-berry">Launch list</p>
-            <h2 id="launch-modal-title" className="mt-2 text-3xl font-black">
-              Join the launch list
-            </h2>
-          </div>
+    <header className="sticky top-0 z-50 border-b border-ink/10 bg-paper/94 backdrop-blur-xl transition-colors duration-300 dark:border-white/10 dark:bg-[#0D1824]/94">
+      <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between px-4 md:px-10 xl:h-20 xl:px-[100px]">
+        <a className="focus-ring rounded-xl" href="#" aria-label="snërqq home">
+          <Image
+            src={images.logo}
+            alt="snërqq"
+            width={115}
+            height={40}
+            className="h-7 w-auto transition xl:h-10 dark:brightness-0 dark:invert"
+            style={{ width: "auto" }}
+            unoptimized
+          />
+        </a>
+
+        <nav className="hidden items-center gap-1 xl:flex" aria-label="Main navigation">
+          {navItems.map((item) => (
+            <a
+              key={item}
+              href="#"
+              className="focus-ring rounded-full px-4 py-3 text-base font-bold text-ink/70 transition hover:bg-white hover:text-ink dark:text-[#EAF7FA] dark:hover:bg-white/10 dark:hover:text-[#9FF4FA]"
+            >
+              {item}
+            </a>
+          ))}
+        </nav>
+
+        <div className="flex items-center gap-3">
           <button
-            className="focus-ring flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white text-ink"
             type="button"
-            aria-label="Close modal"
-            onClick={closeModal}
+            className="focus-ring hidden h-14 items-center justify-center rounded-2xl bg-lime px-6 text-lg font-black text-berry shadow-button transition hover:-translate-y-0.5 dark:shadow-[0_12px_28px_rgba(173,252,3,0.2)] xl:flex"
           >
-            <X aria-hidden="true" size={21} />
+            Join the launch list
+          </button>
+
+          <button
+            type="button"
+            className="focus-ring flex h-11 w-11 items-center justify-center rounded-full border border-ink/10 bg-white text-ink shadow-sm transition hover:-translate-y-0.5 hover:bg-skywash dark:border-white/12 dark:bg-white/10 dark:text-white dark:hover:bg-white/16"
+            aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+            onClick={onToggleTheme}
+          >
+            {theme === "dark" ? <Sun aria-hidden="true" size={20} /> : <Moon aria-hidden="true" size={20} />}
+          </button>
+
+          <button
+            type="button"
+            className="focus-ring flex h-11 w-11 items-center justify-center rounded-full border border-ink/10 bg-white text-ink shadow-sm transition dark:border-white/12 dark:bg-white/10 dark:text-white xl:hidden"
+            aria-label="Open menu"
+          >
+            <Menu aria-hidden="true" size={22} />
           </button>
         </div>
-
-        {success ? (
-          <div className="mt-8 rounded-3xl bg-mint p-6">
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-lime text-berry">
-              <Check aria-hidden="true" size={24} strokeWidth={3} />
-            </div>
-            <h3 className="mt-5 text-2xl font-black">You&apos;re on the list.</h3>
-            <p className="mt-3 leading-7 text-ink/72">
-              We&apos;ll reach out when snërqq opens for early families. This demo keeps the submission local.
-            </p>
-            <button
-              className="focus-ring mt-6 min-h-12 rounded-2xl bg-ink px-5 font-bold text-white"
-              type="button"
-              onClick={closeModal}
-            >
-              Close
-            </button>
-          </div>
-        ) : (
-          <form className="mt-7 space-y-5" onSubmit={handleSubmit} noValidate>
-            <label className="block">
-              <span className="text-sm font-bold text-ink/78">First name optional</span>
-              <input
-                className="focus-ring mt-2 min-h-[52px] w-full rounded-2xl border border-ink/14 bg-white px-4 text-base outline-none"
-                name="firstName"
-                placeholder="First name"
-                type="text"
-              />
-            </label>
-
-            <label className="block">
-              <span className="text-sm font-bold text-ink/78">Email address</span>
-              <input
-                className="focus-ring mt-2 min-h-[52px] w-full rounded-2xl border border-ink/14 bg-white px-4 text-base outline-none"
-                name="email"
-                placeholder="example@mail.com"
-                type="email"
-                aria-invalid={Boolean(errors.email)}
-                aria-describedby={errors.email ? "email-error" : undefined}
-              />
-              {errors.email ? <p id="email-error" className="mt-2 text-sm font-bold text-berry">{errors.email}</p> : null}
-            </label>
-
-            <label className="flex items-start gap-3 rounded-2xl bg-white p-4">
-              <input
-                className="mt-1 h-5 w-5 accent-berry"
-                name="policy"
-                type="checkbox"
-                aria-invalid={Boolean(errors.policy)}
-                aria-describedby={errors.policy ? "policy-error" : undefined}
-              />
-              <span className="text-sm leading-6 text-ink/74">
-                I agree to the snërqq Privacy Policy and understand this demo does not submit to a live waitlist API.
-              </span>
-            </label>
-            {errors.policy ? <p id="policy-error" className="text-sm font-bold text-berry">{errors.policy}</p> : null}
-
-            <button
-              className="focus-ring flex min-h-14 w-full items-center justify-center gap-2 rounded-2xl bg-lime px-6 text-lg font-black text-berry shadow-button"
-              type="submit"
-            >
-              Join the launch list
-              <ArrowRight aria-hidden="true" size={20} />
-            </button>
-            <p className="text-center text-sm leading-6 text-ink/58">
-              We will never share or sell your information.
-            </p>
-          </form>
-        )}
       </div>
-    </div>
+    </header>
   );
 }
 
 function SiteFooter() {
   return (
-    <footer className="border-t border-ink/10 bg-paper px-4 py-10 sm:px-6 lg:px-8">
-      <div className="mx-auto flex max-w-7xl flex-col gap-8 md:flex-row md:items-center md:justify-between">
+    <footer className="border-t border-white/10 bg-ink px-4 py-10 text-white transition-colors duration-300 md:px-10 xl:px-[100px] dark:bg-[#08111B]">
+      <div className="mx-auto flex max-w-[1440px] flex-col gap-8 md:flex-row md:items-center md:justify-between">
         <div>
           <Image
             src={images.logo}
             alt="snërqq"
             width={115}
             height={40}
-            className="h-9 w-auto"
+            className="h-9 w-auto brightness-0 invert"
             style={{ width: "auto" }}
             unoptimized
           />
-          <p className="mt-3 max-w-md text-sm leading-6 text-ink/62">
-            A child-friendly digital platform with no endless feed, no influencers, no advertising and no public visibility.
+          <p className="mt-4 max-w-md text-sm font-medium leading-6 text-white/72">
+            A child-friendly digital platform with no endless feed, no ads and no public visibility.
           </p>
         </div>
-        <nav className="flex flex-wrap gap-x-5 gap-y-3 text-sm font-bold text-ink/72" aria-label="Footer navigation">
+
+        <nav className="flex flex-wrap gap-x-5 gap-y-3 text-sm font-bold text-white/70" aria-label="Footer navigation">
           {["Home", "How it works", "Child safety", "Roadmap", "Terms", "Privacy"].map((item) => (
-            <a key={item} className="focus-ring rounded-lg hover:text-berry" href="#">
+            <a key={item} className="focus-ring rounded-lg transition hover:text-lime" href="#">
               {item}
             </a>
           ))}
