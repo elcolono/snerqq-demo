@@ -13,6 +13,9 @@ const images = {
   hero: optimized("/_next/static/media/playground-baner.02mnc1-l873zb.webp"),
   phone: optimized("/_next/static/media/phone-in-hand.1685vn8xe_lrz.webp", 1200),
   sticker: asset("/icons/stickers/5-year-sticker.webp"),
+  wall: asset("/images/backgrounds/wall.webp"),
+  harmless: optimized("/_next/static/media/harmless.03hmh9-b.wzqx.webp"),
+  freeNotFree: optimized("/_next/static/media/free-not-free.0snq478o81z4z.webp"),
   dingsCircle: optimized("/_next/static/media/circule.0471e2k~rj-6_.webp"),
   dingsArrows: optimized("/_next/static/media/arrows.05g4.vqxjjw4v.webp"),
   dingsCenter: optimized("/_next/static/media/happines.0.06typ6lswuj.webp"),
@@ -91,6 +94,35 @@ const dingsMoments = [
   }
 ];
 
+const pressureStories = [
+  {
+    eyebrow: "Pressure loop 01",
+    title: "What looks harmless can become a real problem",
+    image: images.harmless,
+    alt: "Child reacting to a message on their phone",
+    tag: "not just screen time",
+    paragraphs: [
+      "In many families, the same conflicts keep coming back. Phones are hard to put away. Group chats escalate.",
+      "After mainstream platforms, children can be left agitated, withdrawn, dissatisfied or emotionally overwhelmed."
+    ],
+    callout:
+      "Many platforms are intentionally built to keep children checking back, reacting quickly and staying socially alert."
+  },
+  {
+    eyebrow: "Pressure loop 02",
+    title: "Free is not really free",
+    image: images.freeNotFree,
+    alt: "Two children, one distracted by phone",
+    tag: "attention is the price",
+    paragraphs: [
+      "When a platform is free, attention becomes the business model. The longer children stay online, the more valuable their time becomes.",
+      "Endless scrolling, public visibility and social mechanics keep pulling children back in."
+    ],
+    callout:
+      "For children, that can create pressure, overstimulation, poor sleep and behavior that becomes harder for families to manage."
+  }
+];
+
 type Theme = "light" | "dark";
 
 export default function Home() {
@@ -126,8 +158,89 @@ export default function Home() {
       <HeroSection />
       <ChildFriendlySection />
       <DingsEvolutionSection />
+      <FreeNotFreeSection />
       <SiteFooter />
     </main>
+  );
+}
+
+function FreeNotFreeSection() {
+  return (
+    <section
+      id="free-not-free"
+      className="relative isolate overflow-hidden bg-cover bg-top bg-repeat-y px-4 py-16 md:px-10 md:py-20 xl:bg-[length:100%_auto] xl:bg-center xl:px-[100px]"
+      style={{ backgroundImage: `url(${images.wall})` }}
+    >
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,253,247,0.70),rgba(234,249,255,0.58)_42%,rgba(255,253,247,0.78))] dark:bg-[linear-gradient(180deg,rgba(8,17,27,0.78),rgba(12,23,35,0.72)_42%,rgba(8,17,27,0.84))]" />
+      <div className="absolute left-[-4rem] top-16 rotate-[-12deg] text-[72px] font-black uppercase leading-none text-berry/10 md:text-[140px] dark:text-[#FF8FD5]/10">
+        no feed
+      </div>
+      <div className="absolute bottom-14 right-[-3rem] rotate-[8deg] text-[64px] font-black uppercase leading-none text-lagoon/10 md:text-[132px] dark:text-[#7FEAF3]/10">
+        yard rules
+      </div>
+
+      <div className="relative mx-auto max-w-[1440px]">
+        <header className="mx-auto max-w-4xl text-center">
+          <p className="inline-flex rotate-[-1deg] rounded-full border-2 border-ink bg-lime px-4 py-2 text-sm font-black uppercase text-berry shadow-[5px_5px_0_rgba(23,32,42,0.9)] dark:border-lime dark:bg-[#142332] dark:text-lime dark:shadow-[5px_5px_0_rgba(173,252,3,0.45)]">
+            The problem outside the Yard
+          </p>
+          <h2 className="mt-6 text-[32px] font-black leading-[112%] text-ink md:text-[56px] dark:text-white">
+            The daily stress around phones is not a coincidence.
+          </h2>
+          <p className="mx-auto mt-5 max-w-[850px] text-lg font-semibold leading-[155%] text-ink/74 md:text-xl dark:text-[#D7E8EE]">
+            Free platforms make money by keeping children online for as long as possible. snërqq starts from the opposite idea: a place with edges, rules and room to leave.
+          </p>
+        </header>
+
+        <div className="mt-12 grid gap-8 xl:gap-12">
+          {pressureStories.map((story, index) => (
+            <article
+              key={story.title}
+              className="grid items-center gap-6 xl:grid-cols-2 xl:gap-12"
+            >
+              <div className={index === 1 ? "xl:order-2" : ""}>
+                <div className="relative rounded-[2rem] border-2 border-ink bg-[#F5F0E7]/92 p-5 shadow-[8px_8px_0_rgba(23,32,42,0.9)] backdrop-blur md:p-7 dark:border-white/14 dark:bg-[#121E2A]/92 dark:shadow-[8px_8px_0_rgba(173,252,3,0.28)]">
+                  <div className="absolute -right-3 -top-3 rotate-6 rounded-xl bg-berry px-3 py-1 text-xs font-black uppercase text-white shadow-[4px_4px_0_rgba(23,32,42,0.85)]">
+                    {story.tag}
+                  </div>
+                  <p className="text-sm font-black uppercase text-berry dark:text-[#FF8FD5]">{story.eyebrow}</p>
+                  <h3 className="mt-3 max-w-[620px] text-[28px] font-black leading-[114%] text-ink md:text-[42px] dark:text-white">
+                    {story.title}
+                  </h3>
+
+                  <div className="mt-6 grid gap-4 text-base font-semibold leading-[160%] text-ink/76 md:text-lg dark:text-[#EAF7FA]">
+                    {story.paragraphs.map((paragraph) => (
+                      <p key={paragraph}>{paragraph}</p>
+                    ))}
+                  </div>
+
+                  <p className="mt-6 border-l-4 border-berry bg-white/72 px-5 py-4 text-base font-black leading-[150%] text-lagoon dark:border-lime dark:bg-white/8 dark:text-[#9FF4FA]">
+                    {story.callout}
+                  </p>
+                </div>
+              </div>
+
+              <figure className={index === 1 ? "xl:order-1" : ""}>
+                <div className="relative rotate-[1.2deg] rounded-[1.8rem] border-2 border-ink bg-white p-3 shadow-[10px_10px_0_rgba(23,32,42,0.9)] dark:border-white/14 dark:bg-[#182635] dark:shadow-[10px_10px_0_rgba(253,2,157,0.25)]">
+                  <div className="absolute left-8 top-[-14px] h-8 w-28 rotate-[-4deg] bg-lime/90 opacity-90 shadow-[0_6px_18px_rgba(23,32,42,0.2)]" />
+                  <div className="relative aspect-[607/354] overflow-hidden rounded-[1.25rem] bg-ink">
+                    <Image
+                      src={story.image}
+                      alt={story.alt}
+                      fill
+                      sizes="(max-width: 1280px) 100vw, 50vw"
+                      className="object-cover grayscale-[18%] contrast-[1.05] saturate-[0.92]"
+                      unoptimized
+                    />
+                    <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_58%,rgba(23,32,42,0.36))]" />
+                  </div>
+                </div>
+              </figure>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 
